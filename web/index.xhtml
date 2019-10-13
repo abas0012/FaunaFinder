@@ -13,24 +13,28 @@
         <div class="container">
             <div class="navbar navbar-inverse">
                 <div class="navbar-brand">
-                    #{titleController.pageTitle} - Class Session List
+                    #{titleController.pageTitle} - Animals and Rangers List
                 </div>
             </div>
 
+            
             <h:form id="MyForm">
+            <h:commandButton id="viewAllAnimals" value="View All" action="#{searchAnimal.searchAllAnimals()}" class="btn btn-primary" >
+                        <f:param name="animalID" value="#{status.index + 1}"/>
+            </h:commandButton>
                 <table class="table table-bordered table-striped">
-                    <h:outputLabel id="Animals" value="Animals"  />
+                    <h3><h:outputLabel id="Animals" value="Animals"  /></h3>
                     <!-- For each Animal in animals ArrayList... --> 
                     <tr>
                         <td> 
-                            <h:outputLabel id="Id" value="Id"  />
+                            <h:outputLabel id="animalId" value="Id"  />
                         </td>
                         <td> 
-                            <h:outputLabel id="Name" value="Name"  />
+                            <h:outputLabel id="animalName" value="Animal Name"  />
                         </td>
 
                         <td> 
-                            <h:outputLabel id="Area" value="Area"/>
+                            <h:outputLabel id="Area" value="Habitating Area"/>
                         </td>
 
                         <td> 
@@ -38,14 +42,14 @@
                         </td>
                     </tr>
 
-                    <ui:repeat id="Myrepeat" value="#{animalApplication.animals}"  var="animal" varStatus="status"> 
+                    <ui:repeat id="Myanimals" value="#{animalApplication.animals}"  var="animal" varStatus="status"> 
 
-                        <tr onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent"> 
+                        <tr onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myanimals').textContent"> 
                             <td>
-                                <h:outputText id="propertyID" value="#{animalApplication.animals.get(status.index).animalId}" /> 
+                                <h:outputText id="animalID" value="#{animalApplication.animals.get(status.index).animalId}" /> 
                             </td>
                             <td> 
-                                <h:outputText id="outName" value="#{animalApplication.animals.get(status.index).name}"  />
+                                <h:outputText id="outAnimalName" value="#{animalApplication.animals.get(status.index).name}"  />
                             </td> 
                             <td>
                                 <h:outputText id="outArea" value="#{animalApplication.animals.get(status.index).area}"/>
@@ -54,12 +58,12 @@
                                 <h:outputText id="outPopulation" value="#{animalApplication.animals.get(status.index).population}"  />
                             </td>
                             <td>
-                                <h:commandLink value="View | " action="detail.xhtml" disabled="#{animalApplication.animals.get(status.index).animalId == null}">
-                                    <f:param name="propertyID" value="#{status.index + 1}"/>
+                                <h:commandLink value="View | " action="detailsAnimal.xhtml" disabled="#{animalApplication.animals.get(status.index).animalId == null}">
+                                    <f:param name="animalID" value="#{status.index + 1}"/>
 
                                 </h:commandLink>
-                                <h:commandLink value="Edit | " action="edit.xhtml" disabled="#{animalApplication.animals.get(status.index).animalId == null}">
-                                    <f:param name= "propertyID" value="#{status.index + 1}"></f:param> 
+                                <h:commandLink value="Edit | " action="editAnimal.xhtml" disabled="#{animalApplication.animals.get(status.index).animalId == null}">
+                                    <f:param name= "animalID" value="#{status.index + 1}"></f:param> 
                                 </h:commandLink>
 
                                 <h:commandLink value="Delete" action="#{removeAnimal.removeAnimal(animalApplication.animals.get(status.index).animalId)}"
@@ -73,20 +77,58 @@
 
                     </ui:repeat> 
                 </table>
-
+   
                 <div>
-                    <h:commandButton id="add" value="Add" action="add.xhtml" class="btn btn-primary" />
-
-                    <h:commandButton id="viewAll" value="View All" action="#{searchAnimal.searchAllAnimals()}" class="btn btn-primary" >
-                        <f:param name="propertyID" value="#{status.index + 1}"/>
-                    </h:commandButton>
+                    <h:commandButton id="addAnimal" value="Add" action="addAnimal.xhtml" class="btn btn-primary" />
                 </div>
                 <div>
-                    <h:inputText value="#{searchAnimal.searchByInt}" id="searchById" required="true"   /> 
-                    <h:commandButton id="searchId" value="Search by Id" action="#{searchAnimal.searchAnimalById(searchAnimal.searchByInt)}" 
-                                     class="btn btn-primary" onchange ="if (document.getElementById('MyForm:searchById').value.trim() == '') 
-                                         {document.getElementById('MyForm:searchById').value = 0;} " >
-                        <f:param name="propertyID" value="#{status.index + 1}"/>
+                    <h:inputText value="#{searchAnimal.searchByInt}" id="searchByAnimalId" required="true"   /> 
+                    <h:commandButton id="searchAnimalId" value="Search Animal by Id" action="#{searchAnimal.searchAnimalById(searchAnimal.searchByInt)}" 
+                                     class="btn btn-primary" onchange ="if (document.getElementById('MyForm:searchByAnimalId').value.trim() == '') 
+                                         {document.getElementById('MyForm:searchByAnimalId').value = 0;} " >
+                        <f:param name="animalID" value="#{status.index + 1}"/>
+                    </h:commandButton>
+                </div>
+                
+                
+                <table class="table table-bordered table-striped">
+                    <h3><h:outputLabel id="Rangers" value="Rangers" /></h3>
+                    <!-- For each Rangers in ranger ArrayList... --> 
+                    <tr>
+                        <td> 
+                            <h:outputLabel id="rangerId" value="Id"  />
+                        </td>
+                        <td> 
+                            <h:outputLabel id="rangerName" value="Ranger Name"  />
+                        </td>
+
+                        <td> 
+                            <h:outputLabel id="Phone" value="Phone"/>
+                        </td>
+                    </tr>
+
+                    <ui:repeat id="Myrangers" value="#{animalApplication.rangers}"  var="ranger" varStatus="status"> 
+                        <tr onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrangers').textContent"> 
+                            <td>
+                                <h:outputText id="rangerID" value="#{animalApplication.rangers.get(status.index).rangerId}" /> 
+                            </td>
+                            <td> 
+                                <h:outputText id="outRangerName" value="#{animalApplication.rangers.get(status.index).name}"  />
+                            </td> 
+                            <td>
+                                <h:outputText id="outPhone" value="#{animalApplication.rangers.get(status.index).phone}"/>
+                            </td>
+
+                        </tr> 
+
+                    </ui:repeat> 
+                </table>
+                <div>
+                    <h:inputText value="#{searchRanger.searchByInt}" id="searchByRangerId" required="true"   /> 
+                    <h:commandButton id="searchRangerId" value="Search Ranger by Id" action="#{searchRanger.searchRangerById(searchRanger.searchByInt)}" 
+                                     class="btn btn-primary" onchange ="if (document.getElementById('MyForm:searchByRangerId').value.trim() == '') 
+                                         {document.getElementById('MyForm:searchByRangerId').value = 0;} " >
+                        <f:param name="rangerID" value="#{status.index + 1}"/>
                     </h:commandButton>
                 </div>
 

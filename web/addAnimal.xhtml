@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>#{titleController.pageTitle}</title> 
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="navbar navbar-inverse">
+                <div class="navbar-brand">
+                    #{titleController.pageTitle} - Add Animal
+                </div>
+            </div>
+            <div>
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create"/></h1>
+                        <table class="table table-bordered ">
+                            
+                            <tr>
+                                <td width ="200">
+                                    <h:outputLabel value="name" for="name" />
+                                </td>
+                                <td>
+                                    <h:inputText id="name" value="#{animal.animalName}" title="name" />
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="population" for="population" />
+                                </td>
+                                <td>
+                                    <h:inputText id="population" value="#{animal.population}" title="population" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="suburb" for="suburb" />
+                                </td>
+                                <td>
+                                    <h:inputText id="suburb" value="#{animal.suburb}" title="suburb" />
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="state" for="state" />
+                                </td>
+                                <td>
+                                    <h:inputText id="state" value="#{animal.state}" title="state" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="rangerId" for="rangerId" />
+                                </td>
+                                <td>
+                                    <h:inputText id="rangerId" value="#{animal.rangerId}" title="rangerId" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td height="30">
+
+                                </td>
+                                <td>
+
+                                </td>
+
+                            </tr>
+                        </table>
+
+                        <h:commandButton id="submit" value="Submit" action="#{addAnimal.addAnimal(animal)}" class="btn btn-primary" />
+                        <h:commandButton id="close" value="Close" action="index.xhtml" class="btn btn-primary" />
+
+                    </h:form>
+
+                </f:view>
+            </div>
+        </div>
+
+    </h:body>
+</html>
+
