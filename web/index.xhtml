@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>#{titleController.pageTitle}</title> 
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="navbar navbar-inverse">
+                <div class="navbar-brand">
+                    #{titleController.pageTitle} - Class Session List
+                </div>
+            </div>
+
+            <h:form id="MyForm">
+                <table class="table table-bordered table-striped">
+                    <h:outputLabel id="Animals" value="Animals"  />
+                    <!-- For each Animal in animals ArrayList... --> 
+                    <tr>
+                        <td> 
+                            <h:outputLabel id="Id" value="Id"  />
+                        </td>
+                        <td> 
+                            <h:outputLabel id="Name" value="Name"  />
+                        </td>
+
+                        <td> 
+                            <h:outputLabel id="Area" value="Area"/>
+                        </td>
+
+                        <td> 
+                            <h:outputLabel id="Population" value="Population"/>
+                        </td>
+                    </tr>
+
+                    <ui:repeat id="Myrepeat" value="#{animalApplication.animals}"  var="animal" varStatus="status"> 
+
+                        <tr onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent"> 
+                            <td>
+                                <h:outputText id="propertyID" value="#{animalApplication.animals.get(status.index).animalId}" /> 
+                            </td>
+                            <td> 
+                                <h:outputText id="outName" value="#{animalApplication.animals.get(status.index).name}"  />
+                            </td> 
+                            <td>
+                                <h:outputText id="outArea" value="#{animalApplication.animals.get(status.index).area}"/>
+                            </td>
+                            <td> 
+                                <h:outputText id="outPopulation" value="#{animalApplication.animals.get(status.index).population}"  />
+                            </td>
+                            <td>
+                                <h:commandLink value="View | " action="detail.xhtml" disabled="#{animalApplication.animals.get(status.index).animalId == null}">
+                                    <f:param name="propertyID" value="#{status.index + 1}"/>
+
+                                </h:commandLink>
+                                <h:commandLink value="Edit | " action="edit.xhtml" disabled="#{animalApplication.animals.get(status.index).animalId == null}">
+                                    <f:param name= "propertyID" value="#{status.index + 1}"></f:param> 
+                                </h:commandLink>
+
+                                <h:commandLink value="Delete" action="#{removeAnimal.removeAnimal(animalApplication.animals.get(status.index).animalId)}"
+                                               disabled="#{animalApplication.animals.get(status.index).animalId == null}">
+                                </h:commandLink>
+
+                                <h:outputText value=" "/>
+                            </td>
+
+                        </tr> 
+
+                    </ui:repeat> 
+                </table>
+
+                <div>
+                    <h:commandButton id="add" value="Add" action="add.xhtml" class="btn btn-primary" />
+
+                    <h:commandButton id="viewAll" value="View All" action="#{searchAnimal.searchAllAnimals()}" class="btn btn-primary" >
+                        <f:param name="propertyID" value="#{status.index + 1}"/>
+                    </h:commandButton>
+                </div>
+                <div>
+                    <h:inputText value="#{searchAnimal.searchByInt}" id="searchById" required="true"   /> 
+                    <h:commandButton id="searchId" value="Search by Id" action="#{searchAnimal.searchAnimalById(searchAnimal.searchByInt)}" 
+                                     class="btn btn-primary" onchange ="if (document.getElementById('MyForm:searchById').value.trim() == '') 
+                                         {document.getElementById('MyForm:searchById').value = 0;} " >
+                        <f:param name="propertyID" value="#{status.index + 1}"/>
+                    </h:commandButton>
+                </div>
+
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
