@@ -29,7 +29,7 @@ public class AnimalApplication {
     
     
     private ArrayList<Animal> animals;
-    private ArrayList<Ranger> ranger;
+    private ArrayList<Ranger> rangers;
     
     private boolean showForm = true;
     
@@ -40,6 +40,7 @@ public class AnimalApplication {
     //Add some animal data from DB to App
     public AnimalApplication() throws Exception {
         animals = new ArrayList<>();
+        rangers = new ArrayList<>();
         
         //instantiate animalManagedBean
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
@@ -48,8 +49,11 @@ public class AnimalApplication {
         
         //get animal data from db
         updateAnimalList();
+        updateRangerList();
     }
     
+    
+    //Animals
     public ArrayList<Animal> getAnimals(){
         return animals;
     }
@@ -104,8 +108,46 @@ public class AnimalApplication {
                 animals.add(animal); //add Animal data to the ArrayList<Animal> animals
             }
             
-            setAnimal(animals); //set the global ArrayList attribute with the local ArrayList attribute
+            setAnimal(animals); //set the global ArrayList attribute with the local ArrayList attribute             
+    }
+    
+    //Rangers
+    public ArrayList<Ranger> getRangers(){
+        return rangers;
+    }
+    
+    public void setRanger(ArrayList<Ranger> newRangers){
+        this.rangers = newRangers;
+    }
+    
+    public void updateRangerList(){
+
+            rangers.clear();
+            
+            for (fit5042.assign.repository.entity.Ranger ranger : animalManagedBean.getAllRangers())//for each animal entry in the Entity Class Animal, get all animals
+            {
+                rangers.add(ranger); //add Ranger data to the ArrayList<Ranger> ranger
+            }
+            
+            setRanger(rangers); //set the global ArrayList attribute with the local ArrayList attribute
+       // }
+    }
+    
+    public void searchRangerById(int rangerId){
+        rangers.clear();
         
+        rangers.add(animalManagedBean.searchRangerById(rangerId));
+    }
+    
+    
+    public void searchAllRangers(){
+        animals.clear();
         
+        for (fit5042.assign.repository.entity.Animal animal : animalManagedBean.getAllAnimals())
+            {
+                animals.add(animal); //add Animal data to the ArrayList<Animal> animals
+            }
+            
+            setAnimal(animals); //set the global ArrayList attribute with the local ArrayList attribute             
     }
 }

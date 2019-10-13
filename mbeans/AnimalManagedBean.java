@@ -34,6 +34,8 @@ public class AnimalManagedBean implements Serializable{
     public AnimalManagedBean() {
     }
     
+    
+    //Animals Source Code
     public void addAnimal(Animal animal){
         try{
             animalRepository.addAnimal(animal);
@@ -140,11 +142,70 @@ public class AnimalManagedBean implements Serializable{
             String rangerName = localAnimal.getRangerName();
             String phone = localAnimal.getPhone();
             String password = localAnimal.getPassword();
-            Ranger ranger = new fit5042.assign.repository.entity.Ranger(rangerId, rangerName, phone, password);
-            if (ranger.getRangerId() == 0)
-                ranger = null;
-            animal.setRanger(ranger);
             return animal;
+    }
+    
+    
+     //Rangers Source Code
+    public void addRanger(Ranger ranger){
+        try{
+            animalRepository.addRanger(ranger);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(AnimalManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Ranger searchRangerById(int id){
+        try {
+            return animalRepository.searchRangerById(id);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(AnimalManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+    public void removeRanger(int rangerId){
+        try{
+            animalRepository.removeRanger(rangerId);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(AnimalManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void editRanger(Ranger ranger){
+        try{
+            animalRepository.editRanger(ranger);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(AnimalManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+
+    public void addRanger(fit5042.assign.controllers.Ranger localRanger) {
+        //convert this newAnimal which is the local property to entity property
+        Ranger ranger = converRangerToEntity(localRanger);
+        
+        try{
+            animalRepository.addRanger(ranger);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(AnimalManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private Ranger converRangerToEntity(fit5042.assign.controllers.Ranger localRanger){
+            Ranger ranger = new Ranger(); //entity
+            ranger.setName(localRanger.getRangerName());
+            ranger.setPhone(localRanger.getPhone());
+            ranger.setPassword(localRanger.getPassword());
+            ranger.setTags(localRanger.getTags());
+            return ranger;
     }
     
 }

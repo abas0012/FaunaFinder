@@ -19,30 +19,18 @@ import javax.faces.bean.ManagedProperty;
  * @author Adhi Baskoro
  */
 @RequestScoped
-@Named("removeAnimal")
-public class RemoveAnimal {
+@Named("addRanger")
+public class AddRanger {
     @ManagedProperty(value = "#{animalManagedBean}")//managed property of Animal Managed Bean
     AnimalManagedBean animalManagedBean;
     
     private boolean showForm = true;
     
-    private Animal animal;
+    private Ranger ranger;
     
     AnimalApplication app;
     
-    public void setAnimal(Animal animal){
-        this.animal = animal;
-    }
-    
-    public Animal getAnimal(){
-        return animal;
-    }
-    
-    public boolean isShowForm() {
-        return showForm;
-    }
-    
-    public RemoveAnimal(){
+    public AddRanger(){
         ELContext context
                 = FacesContext.getCurrentInstance().getELContext();
 
@@ -51,26 +39,39 @@ public class RemoveAnimal {
                 .getELResolver()
                 .getValue(context, null, "animalApplication");
 
-        app.updateAnimalList();
-        
         //instantiate animalManagedBean
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         animalManagedBean = (AnimalManagedBean) FacesContext.getCurrentInstance().getApplication()
                 .getELResolver().getValue(elContext, null, "animalManagedBean");
     }
     
-    public void removeAnimal(int animalId){
+    public void addRanger(Ranger localRanger){
+        //this is the local animal, not the entity animal
         try{
-            animalManagedBean.removeAnimal(animalId);
+            //add this animal to db via EJB
+            animalManagedBean.addRanger(localRanger);
             
+            //refresh the list in AnimalApplication bean
             app.searchAllAnimals();
             
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Animal has been deleted succesfully")); 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ranger has been added succesfully"));
         }
-        catch (Exception ex)
-       {
-           
-       }
-       showForm = true;
+        catch (Exception ex){
+            
+        }
+        showForm = true;
+    }
+    
+    
+    public Ranger getRanger(){
+        return ranger;
+    }
+    
+    public void setRanger(Ranger ranger){
+        this.ranger = ranger;
+    }
+    
+    public boolean isShowForm() {
+        return showForm;
     }
 }

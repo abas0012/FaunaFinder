@@ -24,6 +24,8 @@ public class SearchAnimal {
     
     private int searchByInt;
     
+    private int seachByPopulation;
+    
     public AnimalApplication getApp(){
         return app;
     }
@@ -31,8 +33,6 @@ public class SearchAnimal {
     public void setApp(AnimalApplication app){
         this.app = app;
     }
-    
-    private int seachByPopulation;
     
     public int getSearchByInt() {
         return searchByInt;
@@ -42,7 +42,7 @@ public class SearchAnimal {
         this.searchByInt = searchByInt;
     }
     
-        public Animal getAnimal() {
+    public Animal getAnimal() {
         return animal;
     }
 

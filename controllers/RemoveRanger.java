@@ -6,7 +6,6 @@
 package fit5042.assign.controllers;
 
 import fit5042.assign.mbeans.AnimalManagedBean;
-
 import javax.el.ELContext;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -19,30 +18,18 @@ import javax.faces.bean.ManagedProperty;
  * @author Adhi Baskoro
  */
 @RequestScoped
-@Named("removeAnimal")
-public class RemoveAnimal {
+@Named("removeRanger")
+public class RemoveRanger {
     @ManagedProperty(value = "#{animalManagedBean}")//managed property of Animal Managed Bean
     AnimalManagedBean animalManagedBean;
     
     private boolean showForm = true;
     
-    private Animal animal;
+    private Ranger ranger;
     
     AnimalApplication app;
     
-    public void setAnimal(Animal animal){
-        this.animal = animal;
-    }
-    
-    public Animal getAnimal(){
-        return animal;
-    }
-    
-    public boolean isShowForm() {
-        return showForm;
-    }
-    
-    public RemoveAnimal(){
+    public RemoveRanger(){
         ELContext context
                 = FacesContext.getCurrentInstance().getELContext();
 
@@ -59,18 +46,30 @@ public class RemoveAnimal {
                 .getELResolver().getValue(elContext, null, "animalManagedBean");
     }
     
-    public void removeAnimal(int animalId){
+    public void removeRanger(int rangerId){
         try{
-            animalManagedBean.removeAnimal(animalId);
+            animalManagedBean.removeRanger(rangerId);
             
             app.searchAllAnimals();
             
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Animal has been deleted succesfully")); 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ranger has been deleted succesfully")); 
         }
         catch (Exception ex)
        {
            
        }
        showForm = true;
+    }
+    
+    public Ranger getRanger(){
+        return ranger;
+    }
+    
+    public void setRanger(Ranger ranger){
+        this.ranger = ranger;
+    }
+    
+    public boolean isShowForm() {
+        return showForm;
     }
 }

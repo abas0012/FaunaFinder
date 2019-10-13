@@ -157,6 +157,7 @@ public class Animal implements Serializable{
         this.animals = animals;
     } 
     
+    
     @Override
     public String toString() {
         return "Animal{" + "animalId=" + animalId + ", animalName=" + animalName + ", population=" + population + ", area=" + area + ", ranger=" + ranger + ", tags=" + tags + '}';
